@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image "mcr.microsoft.com/playwright"
+            image "mcr.microsoft.com/playwright:v1.51.0-noble"
             args '--entrypoint=""'
         }
     }
@@ -21,9 +21,17 @@ pipeline {
         }
     }
 
-    post{
+    post {
         always {
-            archivarchiveArtifacts artifacts: 'reports/*.json', fingerprint: true        
+            archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report'
+            ])
         }
     }
 }
