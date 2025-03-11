@@ -23,7 +23,7 @@ pipeline {
 
     post{
         always {
-            echo 'Archivage des rapports...'
-            junit 'results/**/*.xml'        }
+            archivarchiveArtifacts artifacts: 'reports/*.json', fingerprint: true        
+        }
     }
 }
